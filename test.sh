@@ -21,9 +21,13 @@ fi
 
 echo "Testing pnpm hoisting determinism with $rounds rounds..."
 
-# Create initial lockfile
-rm -rf node_modules pnpm-lock.yaml
-pnpm install > /dev/null 2>&1
+# Check that lockfile exists
+if [ ! -f "pnpm-lock.yaml" ]; then
+    echo "❌ pnpm-lock.yaml not found. Please run 'pnpm install' first to create it."
+    exit 1
+fi
+
+# Use existing lockfile as baseline
 baseline_lockfile=$(cat pnpm-lock.yaml)
 
 for ((i=1; i<=rounds; i++)); do

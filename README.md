@@ -12,7 +12,9 @@ With the same `pnpm-lock.yaml`, `pnpm install --frozen-lockfile` sometimes hoist
 ./test.sh
 ```
 
-The script runs up to 400 installations with the same lockfile. It should always hoist the same React version, but often doesn't.
+The script runs up to 400 installations using the committed `pnpm-lock.yaml`. It should always hoist the same React version, but often doesn't.
+
+**Note**: The lockfile is committed to ensure everyone tests with identical dependency trees.
 
 ## Expected vs Actual
 
