@@ -1,0 +1,10 @@
+{
+  "name": "app-a",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "react": "^18.2.0",
+    "expo": "~52.0.0",
+    "shared-lib": "workspace:*"
+  }
+}
