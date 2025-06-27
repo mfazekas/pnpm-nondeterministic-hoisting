@@ -5,10 +5,11 @@ on:
 
 jobs:
   test-hoisting:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
+        os: [ubuntu-latest, ubuntu-20.04, macos-latest, windows-latest]
         attempt: [1, 2, 3]
+    runs-on: ${{ matrix.os }}
     
     steps:
       - uses: actions/checkout@v4
@@ -23,7 +24,8 @@ jobs:
           cache: 'pnpm'
           cache-dependency-path: 'pnpm-lock.yaml'
           
-      - name: Test hoisting determinism (attempt ${{ matrix.attempt }})
+      - name: Test hoisting determinism (${{ matrix.os }} - attempt ${{ matrix.attempt }})
+        shell: bash
         run: |
           chmod +x test.sh
           ./test.sh 200
@@ -32,5 +34,5 @@ jobs:
       - name: Report results
         if: failure()
         run: |
-          echo "::warning::Non-deterministic hoisting detected in attempt ${{ matrix.attempt }}"
-          echo "Bug reproduced successfully!"
+          echo "::warning::Non-deterministic hoisting detected on ${{ matrix.os }} (attempt ${{ matrix.attempt }})"
+          echo "Bug reproduced successfully on ${{ runner.os }}!"
